@@ -2,8 +2,8 @@
 - name: Install postgres packages
   apt:
     name:
-      - postgresql
-      - postgresql-server
+      - postgresql 
+      - postgresql-contrib
 
 - name: Instal python packages
   pip:

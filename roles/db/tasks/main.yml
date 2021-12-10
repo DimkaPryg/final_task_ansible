@@ -1,6 +1,6 @@
 ---
 - name: Install PostgreSQL
-  tasks: 
+  block: 
     - name: Install postgres packages
       dnf:
         - name:

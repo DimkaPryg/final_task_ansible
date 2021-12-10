@@ -10,7 +10,8 @@
 
 - name: Instal python packages
   pip:
-    name: psycopg2-binary
+    name: psycopg2
+    state: present
 
 # - name: "Initialize PostgreSQL"
 #   command: postgresql-setup initdb

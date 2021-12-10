@@ -1,7 +1,8 @@
 ---
-- name: Install postgres packages
+- name: Install packages
   become: yes
   apt:
+    update_cache: yes
     name:
       - acl
       - python3-pip

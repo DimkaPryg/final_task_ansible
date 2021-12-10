@@ -12,36 +12,36 @@
 
 - name: Enable PostgreSQL {{pg_version}}
   service:
-    name: postgresql@{{ pg_version }}-main
+    name: "{{pg_service_name}}"
     state: started
     enabled: yes
 
-- name: "Create a new database"
+- name: "Create a new database {{ db_name }}"
   postgresql_db:
-    name: magazine
+    name: "{{ db_name }}"
     state: present
   become: yes
   become_user: postgres
 
-- name: "Create a new user"
+- name: "Create a new user {{ db_user }}"
   postgresql_user:
     state: present
-    name: harry
-    password: potter
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
   become: yes
   become_user: postgres
 
-- name: "Grant user access"
+- name: "Grant user access {{ db_name }}"
   postgresql_privs:
     type: database
-    database: magazine
-    roles: harry
+    database: "{{ db_name }}"
+    roles: "{{ db_user }}"
     grant_option: no
     privs: all
   become: yes
   become_user: postgres
 
-- name: "Allow md5 connection"
+- name: "Allow connection"
   postgresql_pg_hba:
     dest: "{{pg_conf_path}}"
     contype: host

@@ -1,7 +1,8 @@
 ---
-- name: Install Postgres
+- name: Install PostgreSQL {{pg_version}}
   package:
     name:
+      - acl
       - python3-pycurl
       - python3-psycopg2
       - postgresql-{{pg_version}}
@@ -9,7 +10,7 @@
     update_cache: yes
   become: true
 
-- name: Enable PostgreSQL
+- name: Enable PostgreSQL {{pg_version}}
   service:
     name: postgresql@{{ pg_version }}-main
     state: started

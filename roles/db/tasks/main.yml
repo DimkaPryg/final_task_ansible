@@ -1,6 +1,6 @@
 ---
 - name: Install postgres packages
-  dnf:
+  apt:
     name:
       - postgresql
       - postgresql-server

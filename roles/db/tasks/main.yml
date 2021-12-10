@@ -1,18 +1,18 @@
 ---
-- name: Install packages
-  become: yes
-  apt:
-    update_cache: yes
+- name: Install Postgres
+  package:
     name:
-      - acl
-      - python3-pip
-      - postgresql 
-      - postgresql-contrib
-
-- name: Instal python packages
-  pip:
-    name: psycopg2
+      - ca-certificates
+      - python3-pycurl
+      - python3-psycopg2
+      - postgresql-12
+      - postgresql-{{ pg_version }}
+      - postgresql-server-dev-{{ pg_version }}
+      - postgresql-{{ pg_version }}-sslutils
     state: present
+    update_cache: yes
+  become: true
+
 
 # - name: "Initialize PostgreSQL"
 #   command: postgresql-setup initdb

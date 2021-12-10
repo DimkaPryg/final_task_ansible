@@ -52,8 +52,3 @@
   become: yes
   become_user: postgres
   notify: restart postgres
-
-- name: Restart PostgreSQL
-  service:
-    name: postgresql
-    state: restarted

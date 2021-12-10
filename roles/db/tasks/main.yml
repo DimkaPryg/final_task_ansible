@@ -30,16 +30,16 @@
 - name: "Create a new user"
   postgresql_user:
     state: present
-    name: "{{ db.user }}"
-    password: "{{ db.password }}"
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
   become: yes
   become_user: postgres
 
 - name: "Grant user access"
   postgresql_privs:
     type: database
-    database: "{{ db.name }}"
-    roles: "{{ db.user }}"
+    database: "{{ db_name }}"
+    roles: "{{ db_user }}"
     grant_option: no
     privs: all
   become: yes
@@ -51,7 +51,7 @@
     contype: host
     databases: all
     method: md5
-    users: "{{ db.user }}"
+    users: "{{ db_user }}"
     create: true
   become: yes
   become_user: postgres

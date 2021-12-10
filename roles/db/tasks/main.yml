@@ -11,8 +11,8 @@
   pip:
     name: psycopg2-binary
 
-- name: "Initialize PostgreSQL"
-  command: postgresql-setup initdb
+# - name: "Initialize PostgreSQL"
+#   command: postgresql-setup initdb
 
 - name: Enable PostgreSQL
   service:

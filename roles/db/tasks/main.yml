@@ -1,2 +1,28 @@
-- name: Test
-  command: echo "hello world"
+---
+- name: Install PostgreSQL
+  tasks: 
+    - name: Install postgres packages
+      dnf:
+        - name:
+          - postgresql
+          - postgresql-server 
+    
+    - name: Instal python packages
+      pip:
+        name: psycopg2-binary      
+
+    - name: "Initialize PostgreSQL"
+      command: postgresql-setup initdb
+
+    - name: Enable PostgreSQL
+      service: 
+        name: postgresql
+        state: started
+        enabled: yes
+  
+  handlers:
+    - name: Restart PostgreSQL
+      service:
+        name: postgresql
+        state: restarted
+    

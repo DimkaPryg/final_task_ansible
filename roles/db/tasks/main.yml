@@ -19,6 +19,43 @@
         name: postgresql
         state: started
         enabled: yes
+    
+    - name: "Create a new database"
+      postgresql_db:
+        name: "{{ db.name }}"
+        state: present
+      become: yes
+      become_user: postgres
+
+    - name: "Create a new user"
+      postgresql_user:
+        state: present
+        name: "{{ db.user }}"
+        password: "{{ db.password }}"
+      become: yes
+      become_user: postgres
+
+    - name: "Grant user access"
+      postgresql_privs:
+        type: database
+        database: "{{ db.name }}"
+        roles: "{{ db.user }}"
+        grant_option: no
+        privs: all
+      become: yes
+      become_user: postgres
+    
+    - name: "Allow md5 connection"
+      postgresql_pg_hba:
+        dest: "~/data/pg_hba.conf"
+        contype: host
+        databases: all
+        method: md5
+        users: "{{ db.user }}"
+        create: true
+      become: yes
+      become_user: postgres
+      notify: restart postgres
   
   handlers:
     - name: Restart PostgreSQL

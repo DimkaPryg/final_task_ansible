@@ -3,10 +3,10 @@
   become: yes
   apt:
     name:
+      - acl
+      - python3-pip
       - postgresql 
       - postgresql-contrib
-      - python3-pip
-      - acl
 
 - name: Instal python packages
   pip:

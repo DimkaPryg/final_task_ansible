@@ -4,8 +4,7 @@
     name:
       - postgresql 
       - postgresql-contrib
-    become: yes
-    
+
 - name: Instal python packages
   pip:
     name: psycopg2-binary

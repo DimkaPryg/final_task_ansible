@@ -18,7 +18,7 @@
 
 - name: "Create a new database"
   postgresql_db:
-    name: harry
+    name: magazine
     state: present
   become: yes
   become_user: postgres

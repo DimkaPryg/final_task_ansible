@@ -1,5 +1,6 @@
 ---
 - name: Install postgres packages
+  become: yes
   apt:
     name:
       - postgresql 

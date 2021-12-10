@@ -1,65 +1,61 @@
 ---
-- name: Install PostgreSQL
-  tasks: 
-    - name: Install postgres packages
-      dnf:
-        - name:
-          - postgresql
-          - postgresql-server 
-    
-    - name: Instal python packages
-      pip:
-        name: psycopg2-binary      
+- name: Install postgres packages
+  dnf:
+    name:
+      - postgresql
+      - postgresql-server
 
-    - name: "Initialize PostgreSQL"
-      command: postgresql-setup initdb
+- name: Instal python packages
+  pip:
+    name: psycopg2-binary
 
-    - name: Enable PostgreSQL
-      service: 
-        name: postgresql
-        state: started
-        enabled: yes
-    
-    - name: "Create a new database"
-      postgresql_db:
-        name: "{{ db.name }}"
-        state: present
-      become: yes
-      become_user: postgres
+- name: "Initialize PostgreSQL"
+  command: postgresql-setup initdb
 
-    - name: "Create a new user"
-      postgresql_user:
-        state: present
-        name: "{{ db.user }}"
-        password: "{{ db.password }}"
-      become: yes
-      become_user: postgres
+- name: Enable PostgreSQL
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
 
-    - name: "Grant user access"
-      postgresql_privs:
-        type: database
-        database: "{{ db.name }}"
-        roles: "{{ db.user }}"
-        grant_option: no
-        privs: all
-      become: yes
-      become_user: postgres
-    
-    - name: "Allow md5 connection"
-      postgresql_pg_hba:
-        dest: "~/data/pg_hba.conf"
-        contype: host
-        databases: all
-        method: md5
-        users: "{{ db.user }}"
-        create: true
-      become: yes
-      become_user: postgres
-      notify: restart postgres
-  
-  handlers:
-    - name: Restart PostgreSQL
-      service:
-        name: postgresql
-        state: restarted
-    
+- name: "Create a new database"
+  postgresql_db:
+    name: "{{ db.name }}"
+    state: present
+  become: yes
+  become_user: postgres
+
+- name: "Create a new user"
+  postgresql_user:
+    state: present
+    name: "{{ db.user }}"
+    password: "{{ db.password }}"
+  become: yes
+  become_user: postgres
+
+- name: "Grant user access"
+  postgresql_privs:
+    type: database
+    database: "{{ db.name }}"
+    roles: "{{ db.user }}"
+    grant_option: no
+    privs: all
+  become: yes
+  become_user: postgres
+
+- name: "Allow md5 connection"
+  postgresql_pg_hba:
+    dest: "~/data/pg_hba.conf"
+    contype: host
+    databases: all
+    method: md5
+    users: "{{ db.user }}"
+    create: true
+  become: yes
+  become_user: postgres
+  notify: restart postgres
+
+- name: Restart PostgreSQL
+  service:
+    name: postgresql
+    state: restarted

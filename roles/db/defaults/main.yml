@@ -2,3 +2,7 @@
 pg_version: 12
 pg_conf_path: "/etc/postgresql/{{ pg_version }}/pg_hba.conf"
 pg_service_name: postgresql@{{ pg_version }}-main
+
+db_name: magazine
+db_user: ugly
+db_password: betty

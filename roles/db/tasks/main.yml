@@ -5,6 +5,7 @@
     name:
       - postgresql 
       - postgresql-contrib
+      - python3-pip
 
 - name: Instal python packages
   pip:

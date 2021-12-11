@@ -31,7 +31,7 @@
   become: yes
   become_user: postgres
 
-- name: "Grant user access {{ db_name }}"
+- name: "Grant {{ db_user }} access to the {{ db_name }}"
   postgresql_privs:
     type: database
     database: "{{ db_name }}"
@@ -43,7 +43,7 @@
 
 - name: "Allow connection"
   postgresql_pg_hba:
-    dest: "{{pg_conf_path}}"
+    dest: "{{ pg_conf_path }}"
     contype: host
     databases: all
     method: md5

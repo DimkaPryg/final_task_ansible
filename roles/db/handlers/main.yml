@@ -3,3 +3,4 @@
   service:
     name: "{{pg_service_name}}"
     state: restarted
+    become: true

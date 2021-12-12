@@ -3,3 +3,8 @@
   hosts: db
   roles:
     - db
+
+- name: Web server
+  hosts: web
+  roles:
+    - nginx-install

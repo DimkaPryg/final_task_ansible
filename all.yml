@@ -1,10 +1,17 @@
 ---
-- name: DataBase server
-  hosts: db
-  roles:
-    - db
+# - name: DataBase server
+#   hosts: db
+#   roles:
+#     - db
 
-- name: Web server
+# - name: Web server
+#   hosts: web
+#   roles:
+#     - nginx-install
+
+- name: Ross server
   hosts: web
   roles:
     - nginx-install
+
+  

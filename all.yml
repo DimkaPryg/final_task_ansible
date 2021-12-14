@@ -10,8 +10,9 @@
 #     - nginx-install
 
 - name: Ross server
-  hosts: web
+  hosts: ross
   roles:
     - nginx-install
+    - db
 
   

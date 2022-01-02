@@ -1,0 +1,6 @@
+---
+- name: Ensure group {{node_exporter_group}} exists
+  group:
+    name: "{{node_exporter_group}}"
+    state: present
+  become: true

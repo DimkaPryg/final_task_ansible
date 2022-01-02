@@ -1,6 +1,58 @@
 ---
-- name: Ensure group {{node_exporter_group}} exists
+- name: Install grafana
+  apt:
+    deb: "{{grafana_download_url}}"
+
+- name: Start and enable grafana-server
+  systemd:
+    name: grafana-server
+    state: started
+    enabled: yes
+    daemon_reload: no
+  become: true
+
+# Install prometheus
+
+- name: Ensure group {{prometheus_user_group}} exists
   group:
-    name: "{{node_exporter_group}}"
+    name: "{{prometheus_user_group}}"
     state: present
+  become: true
+
+- name: Add user {{prometheus_user}}  
+  user:
+    name: "{{prometheus_user}}"
+    groups: "{{prometheus_user_group}}"
+    shell: /sbin/nologin
+    append: yes
+    comment: "Prometheus nologin user"
+    state: present
+  become: true
+
+- name: Ensure {{prometheus_directory}} directory exists
+  file:
+    path: "{{prometheus_directory}}"
+    state: directory
+  become: true
+
+- name: Download and unarchive prometheus
+  ansible.builtin.unarchive:
+    src: "{{node_exporter_src}}"
+    dest: "{{prometheus_directory}}"
+    remote_src: yes
+  become: true
+
+- name: Create prometheus.service
+  ansible.builtin.template: 
+    src: roles/visualization-monitoring/templates/prometheus.service
+    dest: /etc/systemd/system/node-exporter.service
+    mode: 0755
+  become: true
+
+- name: Start and enable prometheus.service
+  ansible.builtin.systemd:
+    name: prometheus
+    state: started
+    enabled: yes
+    daemon_reload: yes
   become: true

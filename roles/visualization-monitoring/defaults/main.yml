@@ -1,2 +1,9 @@
 ---
-grafana_user_group: grafana
+grafana_version: 8.3.3
+grafana_download_url: https://dl.grafana.com/oss/release/grafana_{{grafana_version}}_amd64.deb
+
+prometheus_user_group: prometheus
+prometheus_user: prometheus
+prometheus_directory: /opt/prometheus
+prometheus_version: 2.32.1
+prometheus_download_url: https://github.com/prometheus/prometheus/releases/download/v{{prometheus_version}}/prometheus-{{prometheus_version}}.linux-amd64.tar.gz
